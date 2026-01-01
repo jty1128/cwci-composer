@@ -1,10 +1,8 @@
 name: "PHP Lint"
 
 on:
-  push:
-    paths-ignore:
-      - 'doc/**'
   pull_request:
+    branches: [cwci-ca8bb370eb45e92f0aeb-base]
     paths-ignore:
       - 'doc/**'
 
@@ -19,7 +17,7 @@ jobs:
   tests:
     name: "Lint"
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     strategy:
       matrix:
