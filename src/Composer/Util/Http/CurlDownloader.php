@@ -87,6 +87,13 @@ class CurlDownloader
     private $maxRedirects = 20;
     /** @var int */
     private $maxRetries = 3;
+    /**
+     * Seconds a transfer may go without receiving anything before it is given up on and retried, so a server
+     * which accepted the connection but stopped answering does not hold the request for the whole CURLOPT_TIMEOUT
+     *
+     * @var int<1, max>
+     */
+    private $stallTimeout = 30;
     /** @var array<int, string[]> */
     protected $multiErrors = [
         CURLM_BAD_HANDLE => ['CURLM_BAD_HANDLE', 'The passed-in handle is not a valid CURLM handle.'],
