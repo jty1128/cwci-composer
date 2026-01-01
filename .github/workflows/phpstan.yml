@@ -1,10 +1,8 @@
 name: "PHPStan"
 
 on:
-  push:
-    paths-ignore:
-      - 'doc/**'
   pull_request:
+    branches: [cwci-85d4ed7469d8ab86db63-base]
     paths-ignore:
       - 'doc/**'
 
@@ -23,7 +21,7 @@ jobs:
   tests:
     name: "PHPStan"
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     continue-on-error: ${{ matrix.experimental }}
 
     strategy:
@@ -31,8 +29,6 @@ jobs:
         include:
           - php-version: "7.2"
             experimental: false
-          - php-version: "8.3" # phpstan 1.x has trouble parsing php 8.4+ code so we need to ensure we don't upgrade dependencies that far
-            experimental: true
       fail-fast: false
 
     steps:

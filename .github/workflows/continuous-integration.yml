@@ -1,10 +1,8 @@
 name: "Continuous Integration"
 
 on:
-  push:
-    paths-ignore:
-      - 'doc/**'
   pull_request:
+    branches: [cwci-85d4ed7469d8ab86db63-base]
     paths-ignore:
       - 'doc/**'
 
@@ -23,10 +21,11 @@ jobs:
   tests:
     name: "CI"
 
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.os == 'ubuntu-latest' && 'ubuntu-24.04' || matrix.os }}
     continue-on-error: ${{ matrix.experimental }}
 
     strategy:
+      fail-fast: false
       matrix:
         php-version:
           - "7.2"
@@ -53,14 +52,6 @@ jobs:
           - php-version: "8.5"
             dependencies: highest
             os: ubuntu-latest
-            experimental: false
-          - php-version: "8.5"
-            os: windows-latest
-            dependencies: locked
-            experimental: false
-          - php-version: "8.5"
-            os: macos-latest
-            dependencies: locked
             experimental: false
           - php-version: "8.6"
             dependencies: lowest-ignore
@@ -144,7 +135,7 @@ jobs:
   validation:
     name: "Composer validation"
 
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
